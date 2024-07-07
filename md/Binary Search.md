@@ -140,3 +140,91 @@ public:
 ---
 
 ---
+
+### 4. BS on rotated sorted array - m
+
+[- LeetCode ](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) Solution - [YouTube](https://www.youtube.com/watch?v=nIVW4P8b1VA&t=2s)
+
+![](../assets/2024-07-07-17-32-41-image.png)
+
+![](../assets/2024-07-07-17-32-50-image.png)
+
+```cpp
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+         int left = 0; // Start index
+        int right = nums.size() - 1; // End index
+
+        // Binary search to find the minimum element
+        while (left < right) {
+            int mid = left + (right - left) / 2; // Calculate mid-point
+            
+            // If mid element is greater than the rightmost element, the minimum is in the right half
+            if (nums[mid] > nums[right]) {
+                left = mid + 1; // Move left to mid + 1
+            } else { // Otherwise, the minimum is in the left half including mid
+                right = mid; // Move right to mid
+            }
+        }
+        return nums[left]; 
+    }
+};
+```
+
+---
+
+---
+
+---
+
+### 5. Find target element in rotated sorted array
+
+simple - basically you check if mid is your target if not you check if the left most elemet is shorer than mid if yes that left is sorted and you quickly check is target is present there is target is not present there you simply move the left pointer to mid + 1 and if it is present you move right pointer to mid - 1.
+
+![](../assets/2024-07-07-17-59-07-image.png)
+
+![](../assets/2024-07-07-17-59-17-image.png)
+
+```cpp
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+       int left = 0;
+        int right = nums.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                return mid; // Target found
+            }
+
+            // Determine which half is sorted
+            if (nums[left] <= nums[mid]) {
+                // Left half is sorted
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1; // Target is in the left half
+                } else {
+                    left = mid + 1; // Target is in the right half
+                }
+            } else {
+                // Right half is sorted
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1; // Target is in the right half
+                } else {
+                    right = mid - 1; // Target is in the left half
+                }
+            }
+        }
+
+        return -1; // Target not found
+    }
+}; 
+```
+
+---
+
+---
+
+---
