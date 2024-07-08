@@ -2,8 +2,6 @@
 
 [- LeetCode](https://leetcode.com/problems/reverse-linked-list/description/)
 
-
-
 ![](../assets/2024-07-08-22-52-26-image.png)
 
 - Recursively 
