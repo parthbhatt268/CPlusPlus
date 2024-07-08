@@ -37,8 +37,6 @@ public:
 
 ---
 
-
-
 ### 2. Search in 2D matrix [- LeetCode](https://leetcode.com/problems/search-a-2d-matrix/)
 
 ![](C:\Users\parth\AppData\Roaming\marktext\images\2024-07-07-13-18-48-image.png)
@@ -87,8 +85,6 @@ public:
     }
 };
 ```
-
-
 
 ---
 
@@ -159,7 +155,7 @@ public:
         // Binary search to find the minimum element
         while (left < right) {
             int mid = left + (right - left) / 2; // Calculate mid-point
-            
+
             // If mid element is greater than the rightmost element, the minimum is in the right half
             if (nums[mid] > nums[right]) {
                 left = mid + 1; // Move left to mid + 1
@@ -225,6 +221,112 @@ public:
 
 ---
 
+---'>>' is used short hand for divide by 2.
+
+---
+
+### 6. Time Based Key-Value Store [- LeetCode](https://leetcode.com/problems/time-based-key-value-store/description/)
+
+![](../assets/2024-07-08-22-24-02-image.png)
+
+![](../assets/2024-07-08-22-24-15-image.png)
+
+```cpp
+class TimeMap {
+public:
+    // Constructor to initialize the object
+    TimeMap() {
+        // Initialization code, if needed
+    }
+    
+    // Method to store the key with value and timestamp
+    void set(std::string key, std::string value, int timestamp) {
+        store[key].push_back({timestamp, value});
+    }
+    
+    // Method to get the value for a key at the given timestamp
+    std::string get(std::string key, int timestamp) {
+        if (store.find(key) == store.end()) {
+            return ""; // If the key doesn't exist, return an empty string
+        }
+        
+        auto& values = store[key];
+        
+        int left = 0, right = values.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (values[mid].first == timestamp) {
+                return values[mid].second; // Exact timestamp match
+            } else if (values[mid].first < timestamp) {
+                left = mid + 1; // Look on the right side
+            } else {
+                right = mid - 1; // Look on the left side
+            }
+        }
+        
+        if (right >= 0) {
+            return values[right].second; // Closest earlier timestamp match
+        }
+        
+        return ""; // If no valid timestamp is found, return an empty string
+    }
+
+private:
+    // Map to store the key with its list of (timestamp, value) pairs
+    std::map<std::string, std::vector<std::pair<int, std::string>>> store;
+};
+
+
+```
+
 ---
 
 ---
+
+---
+
+### 7. Merge sort problem technique used (Hard)
+
+[Solution - LeetCode](https://leetcode.com/problems/median-of-two-sorted-arrays/solutions/4070500/99-journey-from-brute-force-to-most-optimized-three-approaches-easy-to-understand/)
+
+
+
+![](../assets/2024-07-08-22-26-24-image.png)
+
+![](../assets/2024-07-08-22-26-45-image.png)            
+
+```cpp
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        // Get the sizes of both input arrays.
+        int n = nums1.size();
+        int m = nums2.size();
+
+        // Merge the arrays into a single sorted array.
+        vector<int> merged;
+        for (int i = 0; i < n; i++) {
+            merged.push_back(nums1[i]);
+        }
+        for (int i = 0; i < m; i++) {
+            merged.push_back(nums2[i]);
+        }
+
+        // Sort the merged array.
+        sort(merged.begin(), merged.end());
+
+        // Calculate the total number of elements in the merged array.
+        int total = merged.size();
+
+        if (total % 2 == 1) {
+            // If the total number of elements is odd, return the middle element as the median.
+            return static_cast<double>(merged[total / 2]);
+        } else {
+            // If the total number of elements is even, calculate the average of the two middle elements as the median.
+            int middle1 = merged[total / 2 - 1];
+            int middle2 = merged[total / 2];
+            return (static_cast<double>(middle1) + static_cast<double>(middle2)) / 2.0;
+        }
+    }
+};
+```
