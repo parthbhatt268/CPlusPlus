@@ -91,8 +91,65 @@ Question - ![](../assets/2024-07-09-22-24-17-image.png)
 
 
 
-### Linked list
+### 3. Reorder list
+
+question - [- LeetCode](https://leetcode.com/problems/reorder-list/description/)
+
+solutioj - [YouTube](https://youtube.com/watch?v=S5bfdUTrKLM&t=3s)
+
+![](../assets/2024-07-11-00-06-07-image.png)
+
+Bascially you have to divide the list in two half and then reverse the second half and then merge both list part.
+To find center of linked list you can use slow-fast pointer where each time slow moves one step and fast moves 2 steps int this way when fat will be at the end the so+low pointer will be at the center.
+
+Thats it then just reverse second half and then merge it with first one.
 
 ```cpp
+class Solution {
+public:
+ ListNode* reverse(ListNode* head)
+    {
+        ListNode* prev=NULL;
+        ListNode* curr=head;
+        ListNode* nxt=NULL;
+        
+        while(curr)
+        {
+            nxt=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nxt;
+        }
+        return prev;
+    }
 
+    void reorderList(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+
+        //By doing this slow will reach on half and fast will reach to last
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        //Now seperate the list in two part
+        ListNode* secondReversed = reverse(slow->next);  //Reverse second linkedList
+        ListNode* first = head;
+        slow->next = NULL;
+
+        //Now merge both linkedList
+
+        while(secondReversed)
+        {
+            ListNode* temp1=first->next;
+            ListNode* temp2=secondReversed->next;
+            first->next=secondReversed;
+            secondReversed->next=temp1;
+            first=temp1;
+            secondReversed=temp2;
+        }
+
+    }
+};
 ```
