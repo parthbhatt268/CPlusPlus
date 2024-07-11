@@ -89,8 +89,6 @@ Question - ![](../assets/2024-07-09-22-24-17-image.png)
     }
 ```
 
-
-
 ### 3. Reorder list
 
 question - [- LeetCode](https://leetcode.com/problems/reorder-list/description/)
@@ -112,7 +110,7 @@ public:
         ListNode* prev=NULL;
         ListNode* curr=head;
         ListNode* nxt=NULL;
-        
+
         while(curr)
         {
             nxt=curr->next;
@@ -152,4 +150,47 @@ public:
 
     }
 };
+```
+
+
+
+---
+
+---
+
+---
+
+### 4. Remove the nth element from the list
+
+Solution - [YouTube](https://www.youtube.com/watch?v=XVuQxVej6y8)
+
+if you say n = 2 you remove the 2nd node from linkedlist
+
+Solution is simple - you will have 2 pointers and nowthe offset or distance bwteen these two pointer will be `n` so first you will loop for `fast`pointer to be n values far from slow pointer.
+Now you will move slow and fast pointer both with consant speed untill fast pointer reachs NULL.
+Boz wehn `fast`reaches NULL then slow will be pointer to the element we want to remove.
+
+![](../assets/2024-07-11-23-30-37-image.png)
+
+```cpp
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* fast = head;
+        ListNode* slow = head;
+
+        int length = 0;
+
+        while(n--){
+            fast = fast->next;
+        }
+        if(fast == NULL){
+            return slow->next;
+        }
+
+        while(fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        slow->next = slow->next->next;
+        return head;
+    }
 ```
