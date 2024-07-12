@@ -152,8 +152,6 @@ public:
 };
 ```
 
-
-
 ---
 
 ---
@@ -192,5 +190,58 @@ Boz wehn `fast`reaches NULL then slow will be pointer to the element we want to 
         }
         slow->next = slow->next->next;
         return head;
+    }
+```
+
+---
+
+---
+
+---
+
+### 5. Add two numbers
+
+![](../assets/2024-07-12-23-59-11-image.png)
+
+
+
+```cpp
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+
+        ListNode* l3 = new ListNode(0);
+        ListNode* head;
+        int carry = 0;
+        head = l3;
+
+
+        while(l1 && l2){
+            int value = l1->val + l2->val + carry;
+            carry = value/10;
+            l3->next = new ListNode(value%10);
+            l3 = l3->next;
+            l1 = l1->next;
+            l2 = l2->next;
+        }
+
+        while(l1){
+            int value = l1->val + carry;
+            carry = value/10;
+            l3->next = new ListNode(value%10);
+            l1 = l1->next;
+            l3 = l3->next;
+        }
+
+        while(l2){
+            int value = l2->val + carry;
+            carry = value/10;
+            l3->next = new ListNode(value%10);
+            l2 = l2->next;
+            l3 = l3->next;
+        }
+        
+        if(carry){
+            l3->next = new ListNode(carry);
+        }
+        return head->next;
     }
 ```
