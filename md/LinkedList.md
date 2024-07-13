@@ -245,3 +245,33 @@ Boz wehn `fast`reaches NULL then slow will be pointer to the element we want to 
         return head->next;
     }
 ```
+
+---
+
+---
+
+---
+
+### 6. Find if there is cycle in linked list
+
+![](../assets/2024-07-13-22-12-23-image.png)
+
+```cpp
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast!= NULL && fast->next!=NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+
+            if(fast == slow){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
