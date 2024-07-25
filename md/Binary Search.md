@@ -238,20 +238,20 @@ public:
     TimeMap() {
         // Initialization code, if needed
     }
-    
+
     // Method to store the key with value and timestamp
     void set(std::string key, std::string value, int timestamp) {
         store[key].push_back({timestamp, value});
     }
-    
+
     // Method to get the value for a key at the given timestamp
     std::string get(std::string key, int timestamp) {
         if (store.find(key) == store.end()) {
             return ""; // If the key doesn't exist, return an empty string
         }
-        
+
         auto& values = store[key];
-        
+
         int left = 0, right = values.size() - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
@@ -263,11 +263,11 @@ public:
                 right = mid - 1; // Look on the left side
             }
         }
-        
+
         if (right >= 0) {
             return values[right].second; // Closest earlier timestamp match
         }
-        
+
         return ""; // If no valid timestamp is found, return an empty string
     }
 
@@ -275,8 +275,6 @@ private:
     // Map to store the key with its list of (timestamp, value) pairs
     std::map<std::string, std::vector<std::pair<int, std::string>>> store;
 };
-
-
 ```
 
 ---
@@ -288,8 +286,6 @@ private:
 ### 7. Merge sort problem technique used (Hard)
 
 [Solution - LeetCode](https://leetcode.com/problems/median-of-two-sorted-arrays/solutions/4070500/99-journey-from-brute-force-to-most-optimized-three-approaches-easy-to-understand/)
-
-
 
 ![](../assets/2024-07-08-22-26-24-image.png)
 

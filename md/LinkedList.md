@@ -332,7 +332,7 @@ public:
     int val;
     Node* prev;
     Node* next;
-    
+
     Node(int key, int value) {
         k = key;
         val = value;
@@ -345,14 +345,14 @@ class LRUCache {
 public:
     LRUCache(int capacity) {
         cap = capacity;
-        
+
         left = new Node(0, 0);
         right = new Node(0, 0);
-        
+
         left->next = right;
         right->prev = left;
     }
-    
+
     int get(int key) {
         if (cache.find(key) != cache.end()) {
             remove(cache[key]);
@@ -361,23 +361,23 @@ public:
         }
         return -1;
     }
-    
+
     void put(int key, int value) {
         if (cache.find(key) != cache.end()) {
             remove(cache[key]);
-            
+
             // Free allocated memory for the removed node
             delete cache[key];
         }
         cache[key] = new Node(key, value);
         insert(cache[key]);
-        
+
         if (cache.size() > cap) {
             // remove from list & delete LRU from map
             Node* lru = left->next;
             remove(lru);
             cache.erase(lru->k);
-            
+
             // Free allocated memory for the removed node
             delete lru;
         }
@@ -387,26 +387,100 @@ private:
     unordered_map<int, Node*> cache; // {key -> node}
     Node* left;
     Node* right;
-    
+
     // remove node from list
     void remove(Node* node) {
         Node* prev = node->prev;
         Node* next = node->next;
-        
+
         prev->next = next;
         next->prev = prev;
     }
-    
+
     // insert node at right
     void insert(Node* node) {
         Node* prev = right->prev;
         Node* next = right;
-        
+
         prev->next = node;
         next->prev = node;
-        
+
         node->prev = prev;
         node->next = next;
     }
 };
+```
+
+---
+
+---
+
+---
+
+### Merge K sorted list
+
+![](../assets/2024-07-25-22-59-21-image.png)
+
+```cpp
+
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int n = lists.size();
+        if (n == 0) {
+            return NULL;
+        }
+        
+        while (n > 1) {
+            for (int i = 0; i < n / 2; i++) {
+                lists[i] = mergeTwoLists(lists[i], lists[n - i - 1]);
+            }
+            n = (n + 1) / 2;
+        }
+        
+        return lists.front();
+    }
+private:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if (list1 == NULL && list2 == NULL) {
+            return NULL;
+        }
+        if (list1 == NULL) {
+            return list2;
+        }
+        if (list2 == NULL) {
+            return list1;
+        }
+        
+        ListNode* head = NULL;
+        if (list1->val <= list2->val) {
+            head = list1;
+            list1 = list1->next;
+        } else {
+            head = list2;
+            list2 = list2->next;
+        }
+        ListNode* curr = head;
+        
+        while (list1 != NULL && list2 != NULL) {
+            if (list1->val <= list2->val) {
+                curr->next = list1;
+                list1 = list1->next;
+            } else {
+                curr->next = list2;
+                list2 = list2->next;
+            }
+            curr = curr->next;
+        }
+        
+        if (list1 == NULL) {
+            curr->next = list2;
+        } else {
+            curr->next = list1;
+        }
+        
+        return head;
+    }
+};
+
 ```
