@@ -417,7 +417,7 @@ private:
 
 ---
 
-### Merge K sorted list
+### 9. Merge K sorted list
 
 ![](../assets/2024-07-25-22-59-21-image.png)
 
@@ -482,5 +482,19 @@ private:
         return head;
     }
 };
+
+```
+
+---
+
+---
+
+---
+
+### 10. Reverse Nodes in K-group
+
+![](../assets/2024-07-26-23-56-11-image.png)
+
+```cpp
 
 ```
